@@ -18,7 +18,7 @@ link() {
 
 cd "$(dirname $0)"
 DIR="$PWD"
-for file in .vimrc
+for file in .vimrc .zshrc
 do
 	if ! [ -f "$DIR/$file" ]
 	then
