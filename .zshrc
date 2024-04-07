@@ -19,7 +19,6 @@ else
 	# good enough ZSH without oh-my-zsh
 	autoload -U colors && colors
 	autoload -U compinit && compinit
-	setopt PROMPT_SUBST # on: substitute things in prompt all the time
 	source ~/.zsh-partial-imports/lib/directories.zsh
 	source ~/.zsh-partial-imports/lib/history.zsh
 	source ~/.zsh-partial-imports/lib/key-bindings.zsh
