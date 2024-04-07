@@ -5,8 +5,6 @@ if [ -f "$HOME/.oh-my-zsh.disable" ]; then
 	unset ZSH
 elif [ -d "$HOME/.oh-my-zsh" ]; then
 	export ZSH="$HOME/.oh-my-zsh"
-elif [ -d "$HOME/git/ohmyzsh" ]; then
-	export ZSH="$HOME/git/ohmyzsh"
 fi
 if [ -n "$ZSH" ]; then
 	ZSH_THEME=
@@ -37,19 +35,19 @@ fi
 
 # Shell management
 omz-install() { git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh }
-omz-uninstall() { rm -rf  ~/.oh-my-zsh }
+omz-uninstall() { rm -rf ~/.oh-my-zsh }
 omz-install-highlighting() {
 	if [ -d /usr/share/zsh-syntax-highlighting ]; then
 		# debian zsh-syntax-highlighting package
 		mkdir -p ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 		ln -sv /usr/share/zsh-syntax-highlighting/highlighters/ ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 		ln -sv /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
-		printf "%s\n%s"  '0=${(%):-%N}' 'source ${0:A:h}/zsh-syntax-highlighting.zsh' > ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
+		printf "%s\n%s" '0=${(%):-%N}' 'source ${0:A:h}/zsh-syntax-highlighting.zsh' > ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 	else
 		git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 	fi
 }
-omz-uninstall-highlighting() { rm -rf  ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting }
+omz-uninstall-highlighting() { rm -rf ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting }
 omz-disable() { touch ~/.oh-my-zsh.disable }
 omz-enable() { rm ~/.oh-my-zsh.disable }
 
@@ -67,7 +65,7 @@ RPROMPT= # disable git-prompt right prompt
 VI_MODE_SET_CURSOR=true
 ZSH_THEME_GIT_PROMPT_CACHE=y
 
-# Stores the cancelled lines also in to the history
+# Stores the cancelled lines also in the history
 # http://www.zsh.org/mla/users/2010/msg00241.html
 TRAPINT () {
 	zle && [[ $HISTNO -eq $HISTCMD ]] && print -s -r -- "$PREBUFFER$BUFFER"

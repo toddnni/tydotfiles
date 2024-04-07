@@ -9,8 +9,14 @@ link() {
 	then
 		echo "OK"
 	else
-		rm -rf "$2"
 		mkdir -p "$(dirname $2)"
+		if [ -L "$2" ]
+		then
+			rm "$2"
+		elif [ -e "$2" ]
+		then
+			mv "$2" "$2".orig
+		fi
 		ln -s "$1" "$2"
 		echo "LINKED"
 	fi
