@@ -32,6 +32,8 @@ else
 		source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 	fi
 fi
+# similar to bash, at least required at by ssh-reagent
+setopt NO_NOMATCH # on: if no matches in glob delete the pattern and gives no errors
 
 # Shell management
 omz-install() { git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh }
@@ -70,6 +72,26 @@ ZSH_THEME_GIT_PROMPT_CACHE=y
 TRAPINT () {
 	zle && [[ $HISTNO -eq $HISTCMD ]] && print -s -r -- "$PREBUFFER$BUFFER"
 	return $1
+}
+
+ssh-reagent () {
+	if [ -n "$SSH_AGENT_PID" ]; then
+		echo SSH Agent is running in this shell >&2
+		return
+	elif ssh-add -l > /dev/null 2>&1; then
+		return
+	fi
+	# /auth-agent* is for devpod agent
+	for agent in /tmp/ssh-*/agent.* /tmp/auth-agent*/listener.sock; do
+		export SSH_AUTH_SOCK="$agent"
+		if ssh-add -l > /dev/null 2>&1; then
+			echo Found working SSH Agent: >&2
+			ssh-add -l >&2
+			return
+		fi
+	done
+	echo Cannot find ssh agent with keys - maybe you should start it or reconnect and forward it? >&2
+	unset SSH_AUTH_SOCK
 }
 
 # Personal preferences
