@@ -4,8 +4,15 @@ Toni's .dotfiles
 Contains only the minimal essential editor and shell configs. The ones that are needed on nearly every host.
 No application configs.
 
+These are also used as devcontainer dotfiles.
+
 Notes for bootstrapping
 -----------------------
+
+This repo files
+
+    mkdir -p ~/.vim/swp
+    sh install.sh
 
 The preferred set of shell applications
 
