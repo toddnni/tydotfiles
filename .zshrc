@@ -20,22 +20,35 @@ if [ -n "$ZSH" ]; then
 else
 	# good enough ZSH without oh-my-zsh
 	autoload -U colors && colors
-	setopt AUTOPUSHD # on: push on cd
+	autoload -U compinit && compinit
 	setopt COMPLETE_IN_WORD # on: completes inside a word
-	setopt SHARE_HISTORY # on: save each command immediately to file
-	setopt HIST_IGNORE_DUPS # on: remove successive duplicate commands
-	setopt HIST_IGNORE_SPACE # on: ingnore space in line beginning
 	setopt PROMPT_SUBST # on: substitute things in prompt all the time
-	setopt PUSHD_IGNORE_DUPS # on: no duplicates
-	setopt PUSHDMINUS # on: use - instead of + in cd -3
+	source ~/.zsh-partial-imports/lib/directories.zsh
+	source ~/.zsh-partial-imports/lib/history.zsh
+	source ~/.zsh-partial-imports/lib/key-bindings.zsh
+	source ~/.zsh-partial-imports/vi-mode/vi-mode.plugin.zsh
+	source ~/.zsh-partial-imports/git-prompt/git-prompt.plugin.zsh
 	alias ls='ls --color'
 	P_MARK='%{$fg_bold[blue]%}:%{$reset_color%}'
+	if [ -d /usr/share/zsh-syntax-highlighting ]; then
+		source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+	fi
 fi
 
 # Shell management
 omz-install() { git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh }
 omz-uninstall() { rm -rf  ~/.oh-my-zsh }
-omz-install-highlighting() { git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting }
+omz-install-highlighting() {
+	if [ -d /usr/share/zsh-syntax-highlighting ]; then
+		# debian zsh-syntax-highlighting package
+		mkdir -p ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+		ln -sv /usr/share/zsh-syntax-highlighting/highlighters/ ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+		ln -sv /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+		printf "%s\n%s"  '0=${(%):-%N}' 'source ${0:A:h}/zsh-syntax-highlighting.zsh' > ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
+	else
+		git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+	fi
+}
 omz-uninstall-highlighting() { rm -rf  ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting }
 omz-disable() { touch ~/.oh-my-zsh.disable }
 omz-enable() { rm ~/.oh-my-zsh.disable }
@@ -48,10 +61,6 @@ omz-enable() { rm ~/.oh-my-zsh.disable }
 # - return code
 # Or consider some base theme eg. oliver and add git_super_status
 # PROMPT="${PROMPT} $(git_super_status)"
-if ! typeset -f git_super_status >/dev/null; then
-	P_MARK=':'
-	git_super_status() { true }
-fi
 PROMPT='%{$fg_bold[blue]%}%D{%Y-%m-%d %H:%M}%{$reset_color%} %n'"$P_MARK"'%3~$(git_super_status)%(?..|%{$fg_bold[red]%}%?↵%{$reset_color%})%B%#%b '
 # for plugins prompt integration
 RPROMPT= # disable git-prompt right prompt
@@ -69,7 +78,6 @@ TRAPINT () {
 export PATH="$HOME/bin:$PATH"
 export EDITOR=vim
 
-alias ll='ls -l'
 alias mv='mv -i'
 alias rm='rm -i'
 alias cp='cp -i'

@@ -27,7 +27,7 @@ do
 	fi
 	link "$DIR/$file" "$HOME/$file"
 done
-for dir in .vim/autoload .vim/doc .vim/plugin
+for dir in .vim/autoload .vim/doc .vim/plugin .zsh-partial-imports
 do
 	if ! [ -d "$DIR/$dir" ]
 	then
