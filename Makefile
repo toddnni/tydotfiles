@@ -5,7 +5,8 @@ update-zsh-imports:
 	curl $(OMZ_SOURCE)/lib/history.zsh > .zsh-partial-imports/lib/history.zsh
 	curl $(OMZ_SOURCE)/lib/key-bindings.zsh > .zsh-partial-imports/lib/key-bindings.zsh
 	curl $(OMZ_SOURCE)/lib/completion.zsh > .zsh-partial-imports/lib/completion.zsh
-	# oh-my-zsh simple plugins
+	# oh-my-zsh plugins
 	curl $(OMZ_SOURCE)/plugins/vi-mode/vi-mode.plugin.zsh > .zsh-partial-imports/vi-mode/vi-mode.plugin.zsh
-	curl $(OMZ_SOURCE)/plugins/git-prompt/git-prompt.plugin.zsh > .zsh-partial-imports/git-prompt/git-prompt.plugin.zsh
-	curl $(OMZ_SOURCE)/plugins/git-prompt/gitstatus.py > .zsh-partial-imports/git-prompt/gitstatus.py
+	# faster git-prompt plugin
+	curl https://raw.githubusercontent.com/woefe/git-prompt.zsh/master/git-prompt.zsh > .zsh-partial-imports/woefe-git-prompt/git-prompt.zsh
+

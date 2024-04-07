@@ -15,6 +15,7 @@ if [ -n "$ZSH" ]; then
 	zstyle ':omz:update' mode disabled
 	source "$ZSH/oh-my-zsh.sh"
 	P_MARK='%{$fg_bold[blue]%}∑%{$reset_color%}'
+	P_GIT_CMD='$(git_super_status)'
 else
 	# good enough ZSH without oh-my-zsh
 	autoload -U colors && colors
@@ -24,9 +25,10 @@ else
 	source ~/.zsh-partial-imports/lib/key-bindings.zsh
 	source ~/.zsh-partial-imports/lib/completion.zsh
 	source ~/.zsh-partial-imports/vi-mode/vi-mode.plugin.zsh
-	source ~/.zsh-partial-imports/git-prompt/git-prompt.plugin.zsh
+	source ~/.zsh-partial-imports/woefe-git-prompt/git-prompt.zsh
 	alias ls='ls --color'
 	P_MARK='%{$fg_bold[blue]%}:%{$reset_color%}'
+	P_GIT_CMD='$(gitprompt)'
 	if [ -d /usr/share/zsh-syntax-highlighting ]; then
 		source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 	fi
@@ -58,13 +60,14 @@ omz-enable() { rm ~/.oh-my-zsh.disable }
 # - workdir
 # - git status
 # - return code
-# Or consider some base theme eg. oliver and add git_super_status
-# PROMPT="${PROMPT} $(git_super_status)"
-PROMPT='%{$fg_bold[blue]%}%D{%Y-%m-%d %H:%M}%{$reset_color%} %n'"$P_MARK"'%3~$(git_super_status)%(?..|%{$fg_bold[red]%}%?↵%{$reset_color%})%B%#%b '
+# Or consider some base theme eg. oliver and add git status
+# PROMPT="${PROMPT} $(gitprompt)"
+PROMPT='%{$fg_bold[blue]%}%D{%Y-%m-%d %H:%M}%{$reset_color%} %n'"$P_MARK"'%3~'"$P_GIT_CMD"'%(?..|%{$fg_bold[red]%}%?↵%{$reset_color%})%B%#%b '
 # for plugins prompt integration
-RPROMPT= # disable git-prompt right prompt
+RPROMPT= # disable the right prompt of old git-prompt
+ZSH_THEME_GIT_PROMPT_CACHE=y # old git-prompt
 VI_MODE_SET_CURSOR=true
-ZSH_THEME_GIT_PROMPT_CACHE=y
+ZSH_THEME_GIT_PROMPT_SUFFIX="]" # remove space from the end
 
 # Stores the cancelled lines also in the history
 # http://www.zsh.org/mla/users/2010/msg00241.html
