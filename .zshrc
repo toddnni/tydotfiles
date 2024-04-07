@@ -19,11 +19,11 @@ else
 	# good enough ZSH without oh-my-zsh
 	autoload -U colors && colors
 	autoload -U compinit && compinit
-	setopt COMPLETE_IN_WORD # on: completes inside a word
 	setopt PROMPT_SUBST # on: substitute things in prompt all the time
 	source ~/.zsh-partial-imports/lib/directories.zsh
 	source ~/.zsh-partial-imports/lib/history.zsh
 	source ~/.zsh-partial-imports/lib/key-bindings.zsh
+	source ~/.zsh-partial-imports/lib/completion.zsh
 	source ~/.zsh-partial-imports/vi-mode/vi-mode.plugin.zsh
 	source ~/.zsh-partial-imports/git-prompt/git-prompt.plugin.zsh
 	alias ls='ls --color'
