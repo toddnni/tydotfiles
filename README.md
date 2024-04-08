@@ -17,6 +17,7 @@ This repo files
 The preferred set of shell applications
 
     sudo apt-get install curl git tig ranger vim vim-fugitive vim-editorconfig zsh zsh-syntax-highlighting
+    sudo apt-get install libenchant-2-voikko voikko-fi
 
 Change the shell
 
