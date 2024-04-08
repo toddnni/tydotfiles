@@ -8,7 +8,7 @@ elif [ -d "$HOME/.oh-my-zsh" ]; then
 fi
 if [ -n "$ZSH" ]; then
 	ZSH_THEME=
-	plugins=(vi-mode git-prompt)
+	plugins=(vi-mode git-prompt kube-ps1)
 	if [ -d ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting ]; then
 		plugins+=zsh-syntax-highlighting
 	fi
@@ -25,6 +25,7 @@ else
 	source ~/.zsh-partial-imports/lib/key-bindings.zsh
 	source ~/.zsh-partial-imports/lib/completion.zsh
 	source ~/.zsh-partial-imports/vi-mode/vi-mode.plugin.zsh
+	source ~/.zsh-partial-imports/kube-ps1/kube-ps1.plugin.zsh
 	source ~/.zsh-partial-imports/woefe-git-prompt/git-prompt.zsh
 	alias ls='ls --color'
 	P_MARK='%{$fg_bold[blue]%}:%{$reset_color%}'
@@ -62,12 +63,21 @@ omz-enable() { rm ~/.oh-my-zsh.disable }
 # - return code
 # Or consider some base theme eg. oliver and add git status
 # PROMPT="${PROMPT} $(gitprompt)"
-PROMPT='%{$fg_bold[blue]%}%D{%Y-%m-%d %H:%M}%{$reset_color%} %n'"$P_MARK"'%3~'"$P_GIT_CMD"'%(?..|%{$fg_bold[red]%}%?↵%{$reset_color%})%B%#%b '
+PROMPT='$(kube_ps1)%{$fg_bold[blue]%}%D{%Y-%m-%d %H:%M}%{$reset_color%} %n'"$P_MARK"'%3~'"$P_GIT_CMD"'%(?..|%{$fg_bold[red]%}%?↵%{$reset_color%})%B%#%b '
 # for plugins prompt integration
 RPROMPT= # disable the right prompt of old git-prompt
 ZSH_THEME_GIT_PROMPT_CACHE=y # old git-prompt
-VI_MODE_SET_CURSOR=true
+VI_MODE_SET_CURSOR=true # change the cursor per the vim mode
 ZSH_THEME_GIT_PROMPT_SUFFIX="]" # remove space from the end
+KUBE_PS1_NS_ENABLE=false # no ns
+KUBE_PS1_SEPARATOR=: # used after the symbol, default |
+KUBE_PS1_SYMBOL_PADDING=true # to draw correctly
+KUBE_PS1_CTX_COLOR= # no color, red by default
+KUBE_PS1_PREFIX='' # remove prefix
+KUBE_PS1_SUFFIX=' ' # replace with space
+if ! command -v kubectl >/dev/null; then
+	kubeoff
+fi
 
 # Stores the cancelled lines also in the history
 # http://www.zsh.org/mla/users/2010/msg00241.html
