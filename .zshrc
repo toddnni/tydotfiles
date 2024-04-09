@@ -75,9 +75,6 @@ KUBE_PS1_SYMBOL_PADDING=true # to draw correctly
 KUBE_PS1_CTX_COLOR= # no color, red by default
 KUBE_PS1_PREFIX='' # remove prefix
 KUBE_PS1_SUFFIX=' ' # replace with space
-if ! command -v kubectl >/dev/null; then
-	kubeoff
-fi
 
 # Stores the cancelled lines also in the history
 # http://www.zsh.org/mla/users/2010/msg00241.html
@@ -113,6 +110,12 @@ export EDITOR=vim
 alias mv='mv -i'
 alias rm='rm -i'
 alias cp='cp -i'
+if command -v kubectl >/dev/null; then
+	alias k=kubectl
+	source <(kubectl completion zsh)
+else
+	kubeoff # kube-ps1
+fi
 
 if [ -f ~/.localzshrc ]; then
 	source ~/.localzshrc
