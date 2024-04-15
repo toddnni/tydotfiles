@@ -92,14 +92,14 @@ ssh-reagent () {
 	fi
 	# /auth-agent* is for devpod agent
 	for agent in /tmp/ssh-*/agent.* /tmp/auth-agent*/listener.sock; do
-		export SSH_AUTH_SOCK="$agent"
-		if ssh-add -l > /dev/null 2>&1; then
-			echo Found working SSH Agent: >&2
+		if [ -S "$agent" ]; then
+			echo Found an SSH Agent: >&2
+			export SSH_AUTH_SOCK="$agent"
 			ssh-add -l >&2
 			return
 		fi
 	done
-	echo Cannot find ssh agent with keys - maybe you should start it or reconnect and forward it? >&2
+	echo Cannot find SSH agent socket - maybe you should start it or reconnect and forward it? >&2
 	unset SSH_AUTH_SOCK
 }
 
