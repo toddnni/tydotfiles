@@ -24,7 +24,7 @@ link() {
 
 cd "$(dirname $0)"
 DIR="$PWD"
-for file in .vimrc .zshrc
+for file in .vimrc .zshrc .tmux.conf
 do
 	if ! [ -f "$DIR/$file" ]
 	then
@@ -33,7 +33,7 @@ do
 	fi
 	link "$DIR/$file" "$HOME/$file"
 done
-for dir in .vim/autoload .vim/doc .vim/plugin .zsh-partial-imports
+for dir in .vim/autoload .vim/doc .vim/plugin .zsh-partial-imports .tmux/partial-plugins
 do
 	if ! [ -d "$DIR/$dir" ]
 	then
