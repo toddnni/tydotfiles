@@ -110,6 +110,7 @@ export EDITOR=vim
 alias mv='mv -i'
 alias rm='rm -i'
 alias cp='cp -i'
+alias dh='dirs -v'
 if command -v kubectl >/dev/null; then
 	alias k=kubectl
 	source <(kubectl completion zsh)
