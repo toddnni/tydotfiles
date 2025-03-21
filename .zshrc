@@ -1,12 +1,13 @@
 # .zshrc
 
-# oh-my-zsh integration, or not
-if [ -f "$HOME/.oh-my-zsh.disable" ]; then
+# oh-my-zsh integration, or not. By default not
+if [ -f "$HOME/.oh-my-zsh.disable" ]; then # depracated old check
 	unset ZSH
-elif [ -d "$HOME/.oh-my-zsh" ]; then
+elif [ -f "$HOME/.oh-my-zsh.enable" ] && [ -d "$HOME/.oh-my-zsh" ]; then
 	export ZSH="$HOME/.oh-my-zsh"
 fi
 if [ -n "$ZSH" ]; then
+	# oh-my-zsh
 	ZSH_THEME=
 	plugins=(vi-mode git-prompt kube-ps1)
 	if [ -d ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting ]; then
@@ -18,6 +19,7 @@ if [ -n "$ZSH" ]; then
 	P_GIT_CMD='$(git_super_status)'
 else
 	# good enough ZSH without oh-my-zsh
+	# relying on installed zsh-syntax-highlighting package
 	autoload -U colors && colors
 	autoload -U compinit && compinit
 	source ~/.zsh-partial-imports/lib/directories.zsh
@@ -37,7 +39,7 @@ fi
 # similar to bash, at least required at by ssh-reagent
 setopt NO_NOMATCH # on: if no matches in glob delete the pattern and gives no errors
 
-# Shell management
+# Ability to enable oh-my-zsh
 omz-install() { git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh }
 omz-uninstall() { rm -rf ~/.oh-my-zsh }
 omz-install-highlighting() {
@@ -52,8 +54,8 @@ omz-install-highlighting() {
 	fi
 }
 omz-uninstall-highlighting() { rm -rf ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting }
-omz-disable() { touch ~/.oh-my-zsh.disable }
-omz-enable() { rm ~/.oh-my-zsh.disable }
+omz-disable() { rm -f ~/.oh-my-zsh.disable; rm ~/.oh-my-zsh.enable }
+omz-enable() { rm -f ~/.oh-my-zsh.disable; touch ~/.oh-my-zsh.enable }
 
 # Our own theme. Most ready made had two lines, and if they had return code it was printed to the right side
 # We have
