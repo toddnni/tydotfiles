@@ -1,4 +1,0 @@
-These files are imported. See the respective licenses of the upstreams
-
-Seems to be
-MIT Licensed

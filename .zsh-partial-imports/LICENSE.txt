@@ -1,5 +1,0 @@
-These files are imported. See the respective licenses of the upstreams
-
-For example
-
-MIT License by Robby Russell and contributors for oh-my-zsh parts

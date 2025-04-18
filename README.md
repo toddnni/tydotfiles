@@ -9,7 +9,7 @@ These are also used as devcontainer dotfiles.
 Notes for bootstrapping
 -----------------------
 
-This repo files
+Install the files from this repo
 
     mkdir -p ~/.vim/swp
     sh install.sh
@@ -33,5 +33,5 @@ License
 
 The config files or parts of them can be freely used. See `LICENSE` file
 
-Vim plugins or ZSH plugins in `.zsh-partial-imports/` are imported from elsewhere and different licenses apply to them.
-Tmux in `.tmux/partial-plugins/` are imported from elsewhere and different licenses apply to them.
+Vim plugins or ZSH plugins in `.zsh-partial-imports/` are imported from elsewhere and different licenses apply.
+Tmux in `.tmux/partial-plugins/` are imported from elsewhere and different licenses apply.
