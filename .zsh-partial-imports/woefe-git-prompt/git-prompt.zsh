@@ -290,6 +290,7 @@ function _zsh_git_prompt_git_status_secondary() {
 zmodload zsh/system
 
 function _zsh_git_prompt_async_request() {
+    emulate -L zsh
     typeset -g _ZSH_GIT_PROMPT_ASYNC_FD _ZSH_GIT_PROMPT_ASYNC_PID
 
     # If we've got a pending request, cancel it
@@ -350,7 +351,7 @@ function _zsh_git_prompt_callback() {
 
     if [[ -z "$2" || "$2" == "hup" ]]; then
         # Read output from fd
-        fd_data="$(cat <&$1)"
+        fd_data="$(command cat <&$1)"
         output=( ${(s:##secondary##:)fd_data} )
         _ZSH_GIT_PROMPT_STATUS_OUTPUT="${output[1]}"
         _ZSH_GIT_PROMPT_STATUS_SECONDARY_OUTPUT="${output[2]}"
