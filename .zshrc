@@ -113,7 +113,22 @@ alias mv='mv -i'
 alias rm='rm -i'
 alias cp='cp -i'
 alias dh='dirs -v'
-if command -v kubectl >/dev/null; then
+
+# Load mise from specific path.
+# Note. This needs to be first that this works on in devcontainer.
+#       In general use it is maybe better to use misecomsync to load completion
+#       in a dynamic way
+if [ -x /usr/local/bin/mise ]; then
+	eval "$(/usr/local/bin/mise activate zsh)"
+	# needs some usage tool
+	#source <(/usr/local/bin/mise completion zsh)
+fi
+mise_is_activated() {
+	test -n "$MISE_SHELL"
+}
+
+# hack to load until misecompsync
+if command -v kubectl >/dev/null || mise_is_activated; then
 	alias k=kubectl
 	source <(kubectl completion zsh)
 else
